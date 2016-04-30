@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>my page</title>
+<!-- <link rel="stylesheet" type="text/css" href="..." /> -->
+<style type="text/css">
+html, body {
+	color: #333;
+	background: #fff;
+	font: 18px "arial", "helvetica", "clean", sans-serif;
+}
+#result { margin: 5px 0px; padding: 5px 0px; }
+#result span { padding: 5px; background: #BB4466; color: #fff; }
+</style>
+</head>
+<body>
+<div id="contanyan">
+	<input id="userInput" type="text"><button id="userClick">Get</button>
+	<div id="result">
+	</div>
+</div>
+<script type="text/javascript">
+/*
++00001 = GB-Alarm (not USA) 
++00002 = Confirmation Anti-Theft Warning System (Blink) 
++00004 = Selective Central Locking (SCL) 
++00008 = Anti-Theft Warning System 
++00016 = Rear Lid Release Locking at 5 km/h 
++00032 = Central Locking at 15 km/h (or 10 mph) 
++00064 = Comfort Function via Remote Control (not USA) 
++00128 = Right Hand Drive (RHD) 
++00256 = Avant 
++00512 = Confirmation Close via Remote (1x Blink) 
++01024 = Confirmation Anti-Theft Warning System Horn Activation 
++02048 = Door-/Window Regulator Logic 
++04096 = Thatcham Anti-Theft Warning (not USA) 
++08192 = No Safe-Function 
++16384 = Side Windows with Insulated Glass
+*/
+// 1 2 4 8 16 32 64 ...
+
+function getBase(number) {
+	//var converted = [];
+	var currentBit=1;
+	var bits = [];
+	var modulo;
+	
+	while(number>=1) {
+		modulo = number % 2;
+		//converted.unshift(modulo);
+		number = Math.floor(number/2);
+		if ( modulo == 1 )
+			bits.push(currentBit);
+		currentBit = currentBit*2;
+	}
+	
+	if ( bits.length == 0 ) return "invaild input";
+	return bits;
+}
+
+document.querySelectorAll("#userClick")[0].addEventListener("click", function() {
+	var input = document.querySelectorAll("#userInput")[0].value;
+	var output = document.querySelectorAll("#result")[0];
+	output.innerHTML = "<span>" + getBase(input) + "</span>";
+});
+
+</script>
+</body>
+</html>
